@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Notes" >
+        <menu >
+            <item
+                android:id="@+id/notesNavM"
+                android:icon="@drawable/ic_baseline_notes_24"
+                android:title="Notes" />
+            <item
+                android:id="@+id/newNoteNavM"
+                android:icon="@drawable/ic_baseline_note_add_24"
+                android:title="New Note" />
+            <item
+                android:id="@+id/archiveNavM"
+                android:icon="@drawable/ic_baseline_archive_24"
+                android:title="Archive" />
+            <item
+                android:id="@+id/trashNavM"
+                android:icon="@drawable/ic_baseline_delete_24"
+                android:title="Trash" />
+        </menu>
+    </item>
+    <item android:title="Labels" >
+        <menu >
+            <item
+                android:id="@+id/personalNavM"
+                android:title="Personal Notes" />
+            <item
+                android:id="@+id/homeNavM"
+                android:title="Home Notes" />
+            <item
+                android:id="@+id/workNavM"
+                android:title="Work Notes" />
+            <item
+                android:id="@+id/studyNavM"
+                android:title="Study Notes" />
+        </menu>
+    </item>
+    <item android:title="Manage Account" >
+        <menu >
+            <item
+                android:id="@+id/connectAC"
+                android:icon="@drawable/ic_baseline_sync_24"
+                android:title="Connect Account" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_baseline_warning_24"
+                android:title="Logout" />
+            <item
+                android:id="@+id/deleteAC"
+                android:icon="@drawable/ic_baseline_delete_forever_24"
+                android:title="Delete Account" />
+        </menu>
+    </item>
+</menu>
