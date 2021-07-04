@@ -16,8 +16,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +35,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +60,7 @@ public class Notes extends Base {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser fUser;
+    Spinner labelNotesS;
 
     String NoteTitle;
     FirestorePagingAdapter<NoteModel,NoteViewHolder> noteAdapter;
@@ -66,17 +73,90 @@ public class Notes extends Base {
         View contentView=inflater.inflate(R.layout.activity_notes,null,false);
         drawerLayout.addView(contentView,0);
 
+        Intent data=getIntent();
+        String selectedLabel=data.getStringExtra("Label");
+        String importance=data.getStringExtra("Importance");
+        if (selectedLabel==null){
+            selectedLabel="All";
+        }
+        Toast.makeText(this, "label "+selectedLabel, Toast.LENGTH_SHORT).show();
+
         noteListRecView=findViewById(R.id.notesRecView);
         addNoteFAB=findViewById(R.id.addNoteFAB);
+        labelNotesS=findViewById(R.id.labelNotesS);
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         fUser=fAuth.getCurrentUser();
 
-        getSupportActionBar().setTitle("Notes");
+        getSupportActionBar().setTitle(selectedLabel+" Notes");
+        if (importance!=null){
+            getSupportActionBar().setTitle("Important Notes");
+        }
+        labelNotesS.setVisibility(View.VISIBLE);
+
+        CollectionReference labelsRef=fStore.collection("Notes").document(fUser.getUid())
+                .collection("Labels");
+        List<String> labels=new ArrayList<>();
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, labels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        labelNotesS.setAdapter(adapter);
+
+        //String finalLabel = label;
+        String finalSelectedLabel = selectedLabel;
+        labelsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    labels.add("All");
+                    for (QueryDocumentSnapshot documentSnapshot:task.getResult()){
+                        String label=documentSnapshot.getString("Label_Name");
+                        labels.add(label);
+                    }
+                    adapter.notifyDataSetChanged();
+                    labelNotesS.setSelection(adapter.getPosition(finalSelectedLabel));
+                }
+            }
+        });
+
+
+        String finalSelectedLabel1 = selectedLabel;
+        labelNotesS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!finalSelectedLabel1.equals(labelNotesS.getSelectedItem().toString())){
+                    Intent intent=new Intent(getApplicationContext(),Notes.class);
+                    intent.putExtra("Label",labelNotesS.getSelectedItem().toString());
+                    intent.putExtra("Importance",importance);
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         Query noteQuery=fStore.collection("Notes").document(fUser.getUid())
                 .collection("MyNotes");
+
+        if (!selectedLabel.equals("All")){
+            noteQuery=fStore.collection("Notes").document(fUser.getUid())
+                    .collection("MyNotes").whereEqualTo("Label",selectedLabel);
+            if (importance!=null){
+                noteQuery=fStore.collection("Notes").document(fUser.getUid())
+                        .collection("MyNotes")
+                        .whereEqualTo("Label",selectedLabel)
+                        .whereEqualTo("Important",importance);
+            }
+        }
+        else if (importance!=null){
+            noteQuery=fStore.collection("Notes").document(fUser.getUid())
+                    .collection("MyNotes").whereEqualTo("Important",importance);
+        }
 
         PagedList.Config config=new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(10)

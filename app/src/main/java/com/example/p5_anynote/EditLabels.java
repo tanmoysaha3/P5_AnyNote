@@ -137,6 +137,8 @@ public class EditLabels extends Base {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(EditLabels.this, "Label successfully deleted", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            startActivity(getIntent());
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override

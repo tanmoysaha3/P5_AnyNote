@@ -55,7 +55,7 @@ public class CheckUser extends AppCompatActivity {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 Toast.makeText(CheckUser.this, "Logged in with a temporary account", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Notes.class));
+                                startActivity(new Intent(getApplicationContext(), FirstNote.class));
                                 //startActivity(new Intent(getApplicationContext(), CreateEncryptionPass.class));
                                 finish();
                             }

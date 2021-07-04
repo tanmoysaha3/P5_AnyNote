@@ -13,7 +13,8 @@
         <activity android:name=".FirstNote" />
         <activity android:name=".NewNote" />
         <activity android:name=".EditNote" />
-        <activity android:name=".NoteDetails" />
+        <activity android:name=".NoteDetails"
+            android:label=""/>
         <activity android:name=".Register" />
         <activity android:name=".Login" />
         <activity android:name=".CheckUser">
@@ -24,20 +25,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NotesAsLabel"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+            android:name=".NotesAsLabel"/>
         <activity
-            android:name=".Trash"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+            android:name=".Trash"/>
         <activity
-            android:name=".Archive"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+            android:name=".Archive"/>
         <activity
-            android:name=".Notes"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+            android:name=".Notes"/>
         <activity
-            android:name=".Base"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+            android:name=".Base"/>
     </application>
 
 </manifest>

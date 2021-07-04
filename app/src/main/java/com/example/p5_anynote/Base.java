@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -90,25 +91,11 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.trashNavM:
                 startActivity(new Intent(getApplicationContext(), Trash.class));
                 break;
-            case R.id.personalNavM:
-                Intent intent=new Intent(getApplicationContext(), NotesAsLabel.class);
-                intent.putExtra("Label","Personal");
+            case R.id.importantNavM:
+                Intent intent=new Intent(getApplicationContext(),Notes.class);
+                intent.putExtra("Importance","1");
+                //Toast.makeText(this, "labelLabel" +intent, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
-                break;
-            case R.id.homeNavM:
-                Intent intent1=new Intent(getApplicationContext(),NotesAsLabel.class);
-                intent1.putExtra("Label","Home");
-                startActivity(intent1);
-                break;
-            case R.id.workNavM:
-                Intent intent2=new Intent(getApplicationContext(),NotesAsLabel.class);
-                intent2.putExtra("Label","Work");
-                startActivity(intent2);
-                break;
-            case R.id.studyNavM:
-                Intent intent3=new Intent(getApplicationContext(),NotesAsLabel.class);
-                intent3.putExtra("Label","Study");
-                startActivity(intent3);
                 break;
             case R.id.editLabelsNavM:
                 startActivity(new Intent(getApplicationContext(),EditLabels.class));
@@ -281,5 +268,16 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
                     }
                 });
         warning.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.base_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

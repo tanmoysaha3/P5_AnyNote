@@ -40,6 +40,16 @@
             android:visibility="gone"
             tools:layout_editor_absoluteX="275dp"
             tools:layout_editor_absoluteY="16dp" />
+
+        <Spinner
+            android:id="@+id/labelNotesS"
+            android:layout_width="100sp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:popupBackground="@color/skyblue"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="275dp"
+            tools:layout_editor_absoluteY="16dp" />
     </androidx.appcompat.widget.Toolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
