@@ -6,23 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Archive">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/archiveRecView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/archiveText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextViewArchive"
-        android:textSize="36sp"
+        android:layout_height="0dp"
+        android:layout_marginTop="57dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

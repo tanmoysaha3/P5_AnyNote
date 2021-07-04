@@ -7,13 +7,28 @@
     tools:context=".Trash">
 
     <TextView
-        android:id="@+id/trashText"
+        android:id="@+id/trashWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextViewTrash"
-        android:textSize="36sp"
+        android:paddingStart="8dp"
+        android:text="Deleting note from trash will delete your notes permanently. No restore is possible."
+        android:textColor="#FF0000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.081" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trashRecView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/trashWarning" >
+    </androidx.recyclerview.widget.RecyclerView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

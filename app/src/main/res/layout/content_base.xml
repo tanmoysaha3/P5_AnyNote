@@ -15,15 +15,31 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/noteListRecView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+        <ImageButton
+            android:id="@+id/clearTrashB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:backgroundTint="@android:color/transparent"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+            tools:layout_editor_absoluteX="364dp"
+            tools:layout_editor_absoluteY="6dp" />
+
+        <Spinner
+            android:id="@+id/labelNALS"
+            android:layout_width="125sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:popupBackground="@color/skyblue"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="275dp"
+            tools:layout_editor_absoluteY="16dp" />
+    </androidx.appcompat.widget.Toolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

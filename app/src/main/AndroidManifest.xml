@@ -8,18 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.P5_AnyNote">
-        <activity android:name=".NotesAsLabel"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar"></activity>
-        <activity
-            android:name=".Trash"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar"></activity>
-        <activity
-            android:name=".Archive"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
-        <activity
-            android:name=".Notes"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar">
+        android:theme="@style/Theme.P5_AnyNote.NoActionBar">
+        <activity android:name=".EditLabels"></activity>
+        <activity android:name=".FirstNote" />
+        <activity android:name=".NewNote" />
+        <activity android:name=".EditNote" />
+        <activity android:name=".NoteDetails" />
+        <activity android:name=".Register" />
+        <activity android:name=".Login" />
+        <activity android:name=".CheckUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +24,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".NotesAsLabel"
+            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+        <activity
+            android:name=".Trash"
+            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+        <activity
+            android:name=".Archive"
+            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+        <activity
+            android:name=".Notes"
+            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
+        <activity
             android:name=".Base"
-            android:theme="@style/Theme.P5_AnyNote.NoActionBar"></activity>
+            android:theme="@style/Theme.P5_AnyNote.NoActionBar" />
     </application>
 
 </manifest>

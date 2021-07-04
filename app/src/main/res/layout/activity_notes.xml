@@ -6,15 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".Notes">
 
-    <TextView
-        android:id="@+id/notesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextViewNotes"
-        android:textSize="36sp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notesRecView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="57dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addNoteFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/notesRecView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

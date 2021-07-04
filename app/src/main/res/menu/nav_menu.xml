@@ -35,6 +35,10 @@
             <item
                 android:id="@+id/studyNavM"
                 android:title="Study Notes" />
+            <item
+                android:id="@+id/editLabelsNavM"
+                android:icon="@drawable/ic_baseline_edit_24"
+                android:title="Edit Labels" />
         </menu>
     </item>
     <item android:title="Manage Account" >

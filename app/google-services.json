@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "580884421996",
+    "project_id": "p5-anynote",
+    "storage_bucket": "p5-anynote.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580884421996:android:ad58bf19fb4b1380f42749",
+        "android_client_info": {
+          "package_name": "com.example.p5_anynote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580884421996-8sd7m8r7ca5ppkiek5sp0cjc4um15s7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX_a1Dte7L5dOl7lTfHcG9wBuvTWpgXxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580884421996-8sd7m8r7ca5ppkiek5sp0cjc4um15s7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
