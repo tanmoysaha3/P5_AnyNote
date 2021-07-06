@@ -132,7 +132,7 @@ public class NewNote extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(NewNote.this, "New note created", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), Notes.class));
+                        //startActivity(new Intent(getApplicationContext(), Notes.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -141,6 +141,7 @@ public class NewNote extends AppCompatActivity {
                         newNotePBar.setVisibility(View.INVISIBLE);
                     }
                 });
+                startActivity(new Intent(getApplicationContext(), Notes.class));
             }
         });
     }

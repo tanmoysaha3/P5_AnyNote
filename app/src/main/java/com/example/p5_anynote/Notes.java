@@ -213,6 +213,21 @@ public class Notes extends Base {
                     }
                 });
 
+                holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Intent intent=new Intent(getApplicationContext(), EditNote.class);
+                        intent.putExtra("Title",model.getTitle());
+                        intent.putExtra("Content", model.getContent());
+                        intent.putExtra("Label",model.getLabel());
+                        intent.putExtra("ColorCode",colorCode);
+                        intent.putExtra("NoteId",noteId);
+                        intent.putExtra("Important",model.getImportant());
+                        startActivity(intent);
+                        return false;
+                    }
+                });
+
                 holder.labelNote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -304,20 +319,6 @@ public class Notes extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Notes.this, "Created in Archive", Toast.LENGTH_SHORT).show();
-                                        DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
-                                                .collection("MyNotes").document(noteId);
-                                        docRef1.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(Notes.this, "Deleted from MyNotes", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(getApplicationContext(), Notes.class));
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(Notes.this, "Error in deleting from MyNotes", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -325,6 +326,24 @@ public class Notes extends Base {
                                         Toast.makeText(Notes.this, "Error in Archive", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
+                                DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
+                                        .collection("MyNotes").document(noteId);
+                                docRef1.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(Notes.this, "Deleted from MyNotes", Toast.LENGTH_SHORT).show();
+                                        //finish();
+                                        //startActivity(getIntent());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Notes.this, "Error in deleting from MyNotes", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                finish();
+                                startActivity(getIntent());
                                 return false;
                             }
                         });
@@ -344,21 +363,6 @@ public class Notes extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Notes.this, "Moved to Trash", Toast.LENGTH_SHORT).show();
-                                        DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
-                                                .collection("MyNotes").document(noteId);
-                                        docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(Notes.this, "Deleted from MyNotes", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                                startActivity(getIntent());
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(Notes.this, "Error in deleting from MyNotes", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -366,6 +370,24 @@ public class Notes extends Base {
                                         Toast.makeText(Notes.this, "Error in moving to Trash", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
+                                DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
+                                        .collection("MyNotes").document(noteId);
+                                docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Notes.this, "Deleted from MyNotes", Toast.LENGTH_SHORT).show();
+                                        //finish();
+                                        //startActivity(getIntent());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Notes.this, "Error in deleting from MyNotes", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                finish();
+                                startActivity(getIntent());
                                 return false;
                             }
                         });

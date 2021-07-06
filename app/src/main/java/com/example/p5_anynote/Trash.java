@@ -154,26 +154,27 @@ public class Trash extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Trash.this, "Restored Note", Toast.LENGTH_SHORT).show();
-                                        DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
-                                                .collection("Trash").document(noteId);
-                                        docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(Trash.this, "Deleted from Trash", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                                startActivity(getIntent());
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(Trash.this, "Error in deleting from trash", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(Trash.this, "Error in restoring", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
+                                        .collection("Trash").document(noteId);
+                                docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Trash.this, "Deleted from Trash", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Trash.this, "Error in deleting from trash", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 return false;
@@ -189,10 +190,10 @@ public class Trash extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Trash.this, "Successfully deleted from trash", Toast.LENGTH_SHORT).show();
-                                        finish();
+                                        /*finish();
                                         overridePendingTransition(0, 0);
                                         startActivity(getIntent());
-                                        overridePendingTransition(0, 0);
+                                        overridePendingTransition(0, 0);*/
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -200,6 +201,10 @@ public class Trash extends Base {
                                         Toast.makeText(Trash.this, "Error in deleting from trash", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                finish();
+                                overridePendingTransition(0, 0);
+                                startActivity(getIntent());
+                                overridePendingTransition(0, 0);
                                 return false;
                             }
                         });

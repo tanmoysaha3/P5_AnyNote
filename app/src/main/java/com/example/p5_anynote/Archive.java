@@ -146,21 +146,6 @@ public class Archive extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Archive.this, "Note Unarchived", Toast.LENGTH_SHORT).show();
-                                        DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
-                                                .collection("Archive").document(noteId);
-                                        docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(Archive.this, "deleted from archive", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                                startActivity(getIntent());
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(Archive.this, "Note isn't deleted from archive", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -168,6 +153,24 @@ public class Archive extends Base {
                                         Toast.makeText(Archive.this, "Error in unarchiving", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
+                                DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
+                                        .collection("Archive").document(noteId);
+                                docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Archive.this, "deleted from archive", Toast.LENGTH_SHORT).show();
+                                        //finish();
+                                        //startActivity(getIntent());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Archive.this, "Note isn't deleted from archive", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                finish();
+                                startActivity(getIntent());
                                 return false;
                             }
                         });
@@ -187,21 +190,6 @@ public class Archive extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Archive.this, "Note moved to trash", Toast.LENGTH_SHORT).show();
-                                        DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
-                                                .collection("Archive").document(noteId);
-                                        docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(Archive.this, "Deleted from archive", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                                startActivity(getIntent());
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(Archive.this, "Error in deleting from archive", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -209,6 +197,24 @@ public class Archive extends Base {
                                         Toast.makeText(Archive.this, "Error in moving to trash", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
+                                DocumentReference docRef1 = fStore.collection("Notes").document(fUser.getUid())
+                                        .collection("Archive").document(noteId);
+                                docRef1.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(Archive.this, "Deleted from archive", Toast.LENGTH_SHORT).show();
+                                        //finish();
+                                        //startActivity(getIntent());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Archive.this, "Error in deleting from archive", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                finish();
+                                startActivity(getIntent());
                                 return false;
                             }
                         });

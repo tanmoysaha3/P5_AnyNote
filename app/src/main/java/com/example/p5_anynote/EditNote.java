@@ -159,7 +159,7 @@ public class EditNote extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(EditNote.this, "Note Edited.", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), Notes.class));
+                        //startActivity(new Intent(getApplicationContext(), Notes.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -168,7 +168,7 @@ public class EditNote extends AppCompatActivity {
                         editNotePBar.setVisibility(View.INVISIBLE);
                     }
                 });
-
+                startActivity(new Intent(getApplicationContext(), Notes.class));
             }
         });
     }

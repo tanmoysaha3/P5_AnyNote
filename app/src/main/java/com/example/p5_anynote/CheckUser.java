@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.preference.PowerPreference;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -33,6 +34,8 @@ public class CheckUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_user);
 
+        PowerPreference.init(this);
+
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
         Toast.makeText(this, "Wait please", Toast.LENGTH_SHORT).show();
@@ -45,6 +48,8 @@ public class CheckUser extends AppCompatActivity {
             @Override
             public void run() {
                 if (isOnline()){
+                    //this preference still not used anywhere
+                    PowerPreference.getDefaultFile().putString("NetworkStatus","Online");
                     if (fAuth.getCurrentUser()!=null){
                         startActivity(new Intent(getApplicationContext(), Notes.class));
                         finish();
@@ -69,6 +74,7 @@ public class CheckUser extends AppCompatActivity {
                     }
                 }
                 else {
+                    PowerPreference.getDefaultFile().putString("NetworkStatus","Offline");
                     offlineAlert();
                     Toast.makeText(CheckUser.this, "Offline", Toast.LENGTH_SHORT).show();
                 }
@@ -103,6 +109,14 @@ public class CheckUser extends AppCompatActivity {
                 }).setNegativeButton("Browse Offline", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (fAuth.getCurrentUser()!=null){
+                            startActivity(new Intent(getApplicationContext(),Notes.class));
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(CheckUser.this, "Need internet for first time use", Toast.LENGTH_SHORT).show();
+                        }
+                        //startActivity(new Intent(getApplicationContext(), Notes.class));
                         //startActivity(new Intent(getApplicationContext(), OfflineMainActivity.class));
                     }
                 });

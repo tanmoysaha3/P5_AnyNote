@@ -41,4 +41,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'androidx.paging:paging-runtime:2.1.2'
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
+    implementation 'com.aliassadi:power-preference-lib:2.0.0'
 }
