@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.preference.PowerPreference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +64,18 @@ public class Archive extends Base {
         View contentView=inflater.inflate(R.layout.activity_archive,null,false);
         drawerLayout.addView(contentView,0);
 
+        PowerPreference.init(this);
+        String sortField = PowerPreference.getDefaultFile().getString("AnyNoteSortFieldArchive", "Date");
+        String sortOrder = PowerPreference.getDefaultFile().getString("AnyNoteSortOrderArchive","Descending");
+
+        Query.Direction order;
+        if (sortOrder=="Descending"){
+            order = Query.Direction.DESCENDING;
+        }
+        else {
+            order = Query.Direction.ASCENDING;
+        }
+
         archiveRecView=findViewById(R.id.archiveRecView);
 
         fAuth=FirebaseAuth.getInstance();
@@ -71,7 +85,7 @@ public class Archive extends Base {
         getSupportActionBar().setTitle("Archive");
 
         Query cacheDataQuery = fStore.collection("Notes").document(fUser.getUid())
-                .collection("Archive");
+                .collection("Archive").orderBy(sortField, order);
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(10)
@@ -251,6 +265,49 @@ public class Archive extends Base {
             notImportantB=itemView.findViewById(R.id.notImportantB);
             view = itemView;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.archive_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.latestArchiveM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldArchive","Date");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderArchive","Descending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.oldestArchiveM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldArchive","Date");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderArchive","Ascending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.azArchiveM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldArchive","Title");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderArchive","Ascending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.zaArchiveM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldArchive","Title");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderArchive","Descending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private int getRandomColor() {

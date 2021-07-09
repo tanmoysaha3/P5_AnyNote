@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.preference.PowerPreference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +70,18 @@ public class Trash extends Base {
         View contentView=inflater.inflate(R.layout.activity_trash,null,false);
         drawerLayout.addView(contentView,0);
 
+        PowerPreference.init(this);
+        String sortField = PowerPreference.getDefaultFile().getString("AnyNoteSortFieldTrash", "Date");
+        String sortOrder = PowerPreference.getDefaultFile().getString("AnyNoteSortOrderTrash","Descending");
+
+        Query.Direction order;
+        if (sortOrder=="Descending"){
+            order = Query.Direction.DESCENDING;
+        }
+        else {
+            order = Query.Direction.ASCENDING;
+        }
+
         trashWarning=findViewById(R.id.trashWarning);
         clearTrashB=findViewById(R.id.clearTrashB);
         trashRecView=findViewById(R.id.trashRecView);
@@ -79,7 +93,7 @@ public class Trash extends Base {
         getSupportActionBar().setTitle("Trash");
 
         Query cacheDataQuery = fStore.collection("Notes").document(fUser.getUid())
-                .collection("Trash");
+                .collection("Trash").orderBy(sortField, order);
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(10)
@@ -276,6 +290,49 @@ public class Trash extends Base {
             notImportantB=itemView.findViewById(R.id.notImportantB);
             view = itemView;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.trash_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.latestTrashM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldTrash","Date");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderTrash","Descending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.oldestTrashM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldTrash","Date");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderTrash","Ascending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.azTrashM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldTrash","Title");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderTrash","Ascending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.zaTrashM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldTrash","Title");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderTrash","Descending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private int getRandomColor() {

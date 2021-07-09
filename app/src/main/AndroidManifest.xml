@@ -9,12 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P5_AnyNote.NoActionBar">
-        <activity android:name=".EditLabels"></activity>
+        <activity android:name=".CreateEncryptionPass"></activity>
+        <activity android:name=".EditLabels" />
         <activity android:name=".FirstNote" />
         <activity android:name=".NewNote" />
         <activity android:name=".EditNote" />
-        <activity android:name=".NoteDetails"
-            android:label=""/>
+        <activity
+            android:name=".NoteDetails"
+            android:label="" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
         <activity android:name=".CheckUser">
@@ -24,16 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".NotesAsLabel"/>
-        <activity
-            android:name=".Trash"/>
-        <activity
-            android:name=".Archive"/>
-        <activity
-            android:name=".Notes"/>
-        <activity
-            android:name=".Base"/>
+        <activity android:name=".NotesAsLabel" />
+        <activity android:name=".Trash" />
+        <activity android:name=".Archive" />
+        <activity android:name=".Notes" />
+        <activity android:name=".Base" />
     </application>
 
 </manifest>

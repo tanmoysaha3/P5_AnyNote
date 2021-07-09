@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.preference.PowerPreference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,13 +75,25 @@ public class Notes extends Base {
         View contentView=inflater.inflate(R.layout.activity_notes,null,false);
         drawerLayout.addView(contentView,0);
 
+        PowerPreference.init(this);
+        String sortField = PowerPreference.getDefaultFile().getString("AnyNoteSortFieldNotes", "Date");
+        String sortOrder = PowerPreference.getDefaultFile().getString("AnyNoteSortOrderNotes","Descending");
+
+        Query.Direction order;
+        if (sortOrder=="Descending"){
+            order = Query.Direction.DESCENDING;
+        }
+        else {
+            order = Query.Direction.ASCENDING;
+        }
+
         Intent data=getIntent();
         String selectedLabel=data.getStringExtra("Label");
         String importance=data.getStringExtra("Importance");
         if (selectedLabel==null){
             selectedLabel="All";
         }
-        Toast.makeText(this, "label "+selectedLabel, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "label "+selectedLabel, Toast.LENGTH_SHORT).show();
 
         noteListRecView=findViewById(R.id.notesRecView);
         addNoteFAB=findViewById(R.id.addNoteFAB);
@@ -141,7 +155,7 @@ public class Notes extends Base {
         });
 
         Query noteQuery=fStore.collection("Notes").document(fUser.getUid())
-                .collection("MyNotes");
+                .collection("MyNotes").orderBy(sortField, order);
 
         if (!selectedLabel.equals("All")){
             noteQuery=fStore.collection("Notes").document(fUser.getUid())
@@ -434,6 +448,49 @@ public class Notes extends Base {
             notImportantB=itemView.findViewById(R.id.notImportantB);
             view=itemView;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.notes_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.latestNotesM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldNotes","Date");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderNotes","Descending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.oldestNotesM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldNotes","Date");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderNotes","Ascending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.azNotesM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldNotes","Title");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderNotes","Ascending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else if (item.getItemId()==R.id.zaNotesM){
+            PowerPreference.getDefaultFile().putString("AnyNoteSortFieldNotes","Title");
+            PowerPreference.getDefaultFile().putString("AnyNoteSortOrderNotes","Descending");
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private Integer getRandomColor() {
