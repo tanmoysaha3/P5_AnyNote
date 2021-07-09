@@ -1,7 +1,6 @@
-package com.example.p5_anynote;
+package com.example.p5_anynote.notes;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.paging.PagedList;
@@ -25,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.p5_anynote.R;
+import com.example.p5_anynote.model.NoteModel;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
@@ -44,7 +45,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.preference.PowerPreference;
+import com.tozny.crypto.android.AesCbcWithIntegrity;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +56,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import static com.tozny.crypto.android.AesCbcWithIntegrity.generateKeyFromPassword;
 
 public class Notes extends Base {
 
@@ -66,6 +72,7 @@ public class Notes extends Base {
 
     String NoteTitle;
     FirestorePagingAdapter<NoteModel,NoteViewHolder> noteAdapter;
+    AesCbcWithIntegrity.SecretKeys keys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +207,26 @@ public class Notes extends Base {
                 holder.dateTimeNote.setText(dateString);
 
                 holder.titleNote.setText(model.getTitle());
-                holder.contentNote.setText(model.getContent());
+
+                String pass = PowerPreference.getDefaultFile().getString("AnyNoteEncryptionPass");
+                String salt = PowerPreference.getDefaultFile().getString("AnyNoteEncryptionSalt");
+                String plainText="Empty";
+                try {
+                    keys = generateKeyFromPassword(pass, salt);
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+
+                AesCbcWithIntegrity.CipherTextIvMac cipherTextIvMac = new AesCbcWithIntegrity.CipherTextIvMac(model.getContent());
+                try {
+                    plainText = AesCbcWithIntegrity.decryptString(cipherTextIvMac, keys);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+
+                holder.contentNote.setText(plainText);
                 holder.labelNote.setText(model.getLabel());
                 Integer colorCode=getRandomColor();
                 holder.noteCard.setCardBackgroundColor(holder.view.getResources().getColor(colorCode,null));
@@ -213,12 +239,13 @@ public class Notes extends Base {
                 DocumentSnapshot snapshot=getItem(position);
                 String noteId=snapshot.getId();
 
+                String finalPlainText = plainText;
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent=new Intent(v.getContext(), NoteDetails.class);
                         intent.putExtra("Title",model.getTitle());
-                        intent.putExtra("Content",model.getContent());
+                        intent.putExtra("Content", finalPlainText);
                         intent.putExtra("Label",model.getLabel());
                         intent.putExtra("ColorCode",colorCode);
                         intent.putExtra("NoteId",noteId);
@@ -232,7 +259,7 @@ public class Notes extends Base {
                     public boolean onLongClick(View v) {
                         Intent intent=new Intent(getApplicationContext(), EditNote.class);
                         intent.putExtra("Title",model.getTitle());
-                        intent.putExtra("Content", model.getContent());
+                        intent.putExtra("Content", finalPlainText);
                         intent.putExtra("Label",model.getLabel());
                         intent.putExtra("ColorCode",colorCode);
                         intent.putExtra("NoteId",noteId);
@@ -308,7 +335,7 @@ public class Notes extends Base {
                             public boolean onMenuItemClick(MenuItem item) {
                                 Intent intent=new Intent(getApplicationContext(), EditNote.class);
                                 intent.putExtra("Title",model.getTitle());
-                                intent.putExtra("Content", model.getContent());
+                                intent.putExtra("Content", finalPlainText);
                                 intent.putExtra("Label",model.getLabel());
                                 intent.putExtra("ColorCode",colorCode);
                                 intent.putExtra("NoteId",noteId);
@@ -326,7 +353,7 @@ public class Notes extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title",model.getTitle());
-                                note.put("Content",model.getContent());
+                                note.put("Content",finalPlainText);
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -370,7 +397,7 @@ public class Notes extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title",model.getTitle());
-                                note.put("Content",model.getContent());
+                                note.put("Content",finalPlainText);
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {

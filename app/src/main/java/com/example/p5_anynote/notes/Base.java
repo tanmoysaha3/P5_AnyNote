@@ -1,4 +1,4 @@
-package com.example.p5_anynote;
+package com.example.p5_anynote.notes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +17,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.p5_anynote.R;
+import com.example.p5_anynote.account.CheckUser;
+import com.example.p5_anynote.account.Login;
+import com.example.p5_anynote.account.Register;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

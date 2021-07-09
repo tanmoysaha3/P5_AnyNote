@@ -1,4 +1,4 @@
-package com.example.p5_anynote;
+package com.example.p5_anynote.model;
 
 import com.google.firebase.Timestamp;
 

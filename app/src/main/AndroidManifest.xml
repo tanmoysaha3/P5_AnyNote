@@ -9,28 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P5_AnyNote.NoActionBar">
-        <activity android:name=".CreateEncryptionPass"></activity>
-        <activity android:name=".EditLabels" />
-        <activity android:name=".FirstNote" />
-        <activity android:name=".NewNote" />
-        <activity android:name=".EditNote" />
+        <activity android:name=".security.ConfirmEncryptionPass"></activity>
+        <activity android:name=".security.CreateEncryptionPass" />
+        <activity android:name=".notes.EditLabels" />
+        <activity android:name=".notes.FirstNote" />
+        <activity android:name=".notes.NewNote" />
+        <activity android:name=".notes.EditNote" />
         <activity
-            android:name=".NoteDetails"
+            android:name=".notes.NoteDetails"
             android:label="" />
-        <activity android:name=".Register" />
-        <activity android:name=".Login" />
-        <activity android:name=".CheckUser">
+        <activity android:name=".account.Register" />
+        <activity android:name=".account.Login" />
+        <activity android:name=".account.CheckUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NotesAsLabel" />
-        <activity android:name=".Trash" />
-        <activity android:name=".Archive" />
-        <activity android:name=".Notes" />
-        <activity android:name=".Base" />
+        <activity android:name=".notes.NotesAsLabel" />
+        <activity android:name=".notes.Trash" />
+        <activity android:name=".notes.Archive" />
+        <activity android:name=".notes.Notes" />
+        <activity android:name=".notes.Base" />
     </application>
 
 </manifest>

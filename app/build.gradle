@@ -42,4 +42,5 @@ dependencies {
     implementation 'androidx.paging:paging-runtime:2.1.2'
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
     implementation 'com.aliassadi:power-preference-lib:2.0.0'
+    implementation 'com.github.tozny:java-aes-crypto:1.1.0'
 }

@@ -1,9 +1,8 @@
-package com.example.p5_anynote;
+package com.example.p5_anynote.account;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.p5_anynote.security.ConfirmEncryptionPass;
+import com.example.p5_anynote.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,7 +76,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(Login.this, "Logged in Successfully.", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(getApplicationContext(), ConfirmEncryptionPass.class));
+                        startActivity(new Intent(getApplicationContext(), ConfirmEncryptionPass.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
