@@ -45,4 +45,8 @@
                 android:title="Delete Account" />
         </menu>
     </item>
+    <item
+        android:id="@+id/tipsNavM"
+        android:icon="@drawable/ic_baseline_accessibility_24"
+        android:title="Tips" />
 </menu>

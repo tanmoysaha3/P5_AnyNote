@@ -21,6 +21,7 @@ import com.example.p5_anynote.R;
 import com.example.p5_anynote.account.CheckUser;
 import com.example.p5_anynote.account.Login;
 import com.example.p5_anynote.account.Register;
+import com.example.p5_anynote.options.Tips;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -116,6 +117,9 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             case R.id.deleteAC:
                 displayACDeleteAlert();
+                break;
+            case R.id.tipsNavM:
+                startActivity(new Intent(getApplicationContext(), Tips.class));
                 break;
             default:
                 Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();

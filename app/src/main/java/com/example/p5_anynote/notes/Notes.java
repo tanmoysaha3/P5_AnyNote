@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -69,6 +70,7 @@ public class Notes extends Base {
     FirebaseFirestore fStore;
     FirebaseUser fUser;
     Spinner labelNotesS;
+    //ImageButton searchIB;
 
     String NoteTitle;
     FirestorePagingAdapter<NoteModel,NoteViewHolder> noteAdapter;
@@ -105,6 +107,7 @@ public class Notes extends Base {
         noteListRecView=findViewById(R.id.notesRecView);
         addNoteFAB=findViewById(R.id.addNoteFAB);
         labelNotesS=findViewById(R.id.labelNotesS);
+        //searchIB=findViewById(R.id.searchIB);
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
@@ -114,6 +117,14 @@ public class Notes extends Base {
         if (importance!=null){
             getSupportActionBar().setTitle("Important Notes");
         }
+
+        /*searchIB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Search.class));
+            }
+        });*/
+
         labelNotesS.setVisibility(View.VISIBLE);
 
         CollectionReference labelsRef=fStore.collection("Notes").document(fUser.getUid())
@@ -249,7 +260,8 @@ public class Notes extends Base {
                         intent.putExtra("Label",model.getLabel());
                         intent.putExtra("ColorCode",colorCode);
                         intent.putExtra("NoteId",noteId);
-                        intent.putExtra("PageName","Main");
+                        intent.putExtra("Important",model.getImportant());
+                        intent.putExtra("PageName","Notes");
                         v.getContext().startActivity(intent);
                     }
                 });

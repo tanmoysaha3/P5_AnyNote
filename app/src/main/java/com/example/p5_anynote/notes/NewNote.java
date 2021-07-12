@@ -130,6 +130,20 @@ public class NewNote extends AppCompatActivity {
                     return;
                 }
 
+                /*List<String> subTitles=new ArrayList<>();
+                String subTitle="0";
+                for (int i=0;i<title.length();i++){
+                    for (int j=0;j<title.length();j++){
+                        subTitle=title.substring(i);
+                    }
+                    if (i==title.length()-1){
+                        break;
+                    }
+                    subTitles.add(subTitle);
+                }*/
+
+                //Toast.makeText(NewNote.this, "subTitles"+subTitles, Toast.LENGTH_SHORT).show();
+
                 String pass = PowerPreference.getDefaultFile().getString("AnyNoteEncryptionPass");
                 String salt = PowerPreference.getDefaultFile().getString("AnyNoteEncryptionSalt");
                 //String plainText="Empty";
@@ -159,6 +173,7 @@ public class NewNote extends AppCompatActivity {
                 note.put("Content", ciphertextString);
                 note.put("Label",labelNewNoteS.getSelectedItem().toString());
                 note.put("Important","0");
+                //note.put("SubTitles",subTitles);
                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

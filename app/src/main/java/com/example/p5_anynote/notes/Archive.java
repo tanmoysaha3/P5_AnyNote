@@ -154,6 +154,7 @@ public class Archive extends Base {
                         intent.putExtra("ColorCode",colorCode);
                         intent.putExtra("Label",model.getLabel());
                         intent.putExtra("NoteId",noteId);
+                        intent.putExtra("Important",model.getImportant());
                         intent.putExtra("PageName","Archive");
                         startActivity(intent);
                     }

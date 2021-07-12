@@ -9,17 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P5_AnyNote.NoActionBar">
-        <activity android:name=".security.ConfirmEncryptionPass"></activity>
-        <activity android:name=".security.CreateEncryptionPass" />
-        <activity android:name=".notes.EditLabels" />
-        <activity android:name=".notes.FirstNote" />
-        <activity android:name=".notes.NewNote" />
-        <activity android:name=".notes.EditNote" />
+        <activity android:name=".options.Tips"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".security.ConfirmEncryptionPass"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".security.CreateEncryptionPass"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.EditLabels"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.FirstNote"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.NewNote"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.EditNote"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".notes.NoteDetails"
             android:label="" />
-        <activity android:name=".account.Register" />
-        <activity android:name=".account.Login" />
+        <activity android:name=".account.Register"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".account.Login"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".account.CheckUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +37,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".notes.NotesAsLabel" />
-        <activity android:name=".notes.Trash" />
-        <activity android:name=".notes.Archive" />
-        <activity android:name=".notes.Notes" />
-        <activity android:name=".notes.Base" />
+        <activity android:name=".notes.NotesAsLabel"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.Trash"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.Archive"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.Notes"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".notes.Base"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

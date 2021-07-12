@@ -9,4 +9,10 @@
         <item>Work</item>
         <item>Study</item>
     </string-array>
+
+    <string name="Tips">
+        1. You can edit notes by just long clicking on them.\n
+        2. You can mark important notes by clicking on white space on the left side of notes.\n
+        3. You can even filter important notes of specific label.\n
+    </string>
 </resources>

@@ -30,11 +30,17 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.preference.PowerPreference;
+import com.tozny.crypto.android.AesCbcWithIntegrity;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.tozny.crypto.android.AesCbcWithIntegrity.generateKeyFromPassword;
 
 public class EditNote extends AppCompatActivity {
 
@@ -46,11 +52,14 @@ public class EditNote extends AppCompatActivity {
     ProgressBar editNotePBar;
     Toolbar editNoteToolbar;
     Spinner labelEditNoteS;
+    AesCbcWithIntegrity.SecretKeys keys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
+
+        PowerPreference.init(this);
 
         Intent data=getIntent();
         String noteId=data.getStringExtra("NoteId");
@@ -142,10 +151,30 @@ public class EditNote extends AppCompatActivity {
                 if (nTitle.isEmpty()){
                     nTitle="Empty";
                 }
-                if (content.isEmpty()){
+                if (nContent.isEmpty()){
                     Toast.makeText(EditNote.this, "Note content is empty. Write down something.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                String pass = PowerPreference.getDefaultFile().getString("AnyNoteEncryptionPass");
+                String salt = PowerPreference.getDefaultFile().getString("AnyNoteEncryptionSalt");
+                //String plainText="Empty";
+                try {
+                    keys = generateKeyFromPassword(pass, salt);
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+
+                AesCbcWithIntegrity.CipherTextIvMac cipherTextIvMac = null;
+                try {
+                    cipherTextIvMac = AesCbcWithIntegrity.encrypt(nContent, keys);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+
+                String ciphertextString = cipherTextIvMac.toString();
 
                 editNotePBar.setVisibility(View.VISIBLE);
 
@@ -154,7 +183,7 @@ public class EditNote extends AppCompatActivity {
                 Map<String,Object> note=new HashMap<>();
                 note.put("Date", Timestamp.now());
                 note.put("Title",nTitle);
-                note.put("Content",nContent);
+                note.put("Content",ciphertextString);
                 note.put("Label",labelEditNoteS.getSelectedItem().toString());
                 docRef.update(note).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

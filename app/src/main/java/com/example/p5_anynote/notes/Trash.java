@@ -163,6 +163,7 @@ public class Trash extends Base {
                         intent.putExtra("Content", finalPlainText);
                         intent.putExtra("ColorCode",colorCode);
                         intent.putExtra("NoteId",noteId);
+                        intent.putExtra("Important",model.getImportant());
                         intent.putExtra("PageName","Trash");
                         startActivity(intent);
                     }
@@ -207,8 +208,6 @@ public class Trash extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Trash.this, "Deleted from Trash", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                        startActivity(getIntent());
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -216,6 +215,8 @@ public class Trash extends Base {
                                         Toast.makeText(Trash.this, "Error in deleting from trash", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                finish();
+                                startActivity(getIntent());
                                 return false;
                             }
                         });
