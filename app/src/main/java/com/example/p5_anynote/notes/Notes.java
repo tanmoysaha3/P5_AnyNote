@@ -87,12 +87,13 @@ public class Notes extends Base {
         PowerPreference.init(this);
         String sortField = PowerPreference.getDefaultFile().getString("AnyNoteSortFieldNotes", "Date");
         String sortOrder = PowerPreference.getDefaultFile().getString("AnyNoteSortOrderNotes","Descending");
+        //Toast.makeText(this, "sortField "+sortField+" sortOrder "+sortOrder, Toast.LENGTH_SHORT).show();
 
-        Query.Direction order;
+        Query.Direction order = Query.Direction.DESCENDING;
         if (sortOrder=="Descending"){
             order = Query.Direction.DESCENDING;
         }
-        else {
+        else if (sortOrder=="Ascending"){
             order = Query.Direction.ASCENDING;
         }
 
@@ -284,8 +285,9 @@ public class Notes extends Base {
                 holder.labelNote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(getApplicationContext(),NotesAsLabel.class);
+                        Intent intent=new Intent(getApplicationContext(),Notes.class);
                         intent.putExtra("Label",model.getLabel());
+                        intent.putExtra("Importance",importance);
                         startActivity(intent);
                     }
                 });
@@ -365,7 +367,7 @@ public class Notes extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title",model.getTitle());
-                                note.put("Content",finalPlainText);
+                                note.put("Content",model.getContent());
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -409,7 +411,7 @@ public class Notes extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title",model.getTitle());
-                                note.put("Content",finalPlainText);
+                                note.put("Content", model.getContent());
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {

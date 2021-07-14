@@ -89,8 +89,10 @@ public class Archive extends Base {
 
         getSupportActionBar().setTitle("Archive");
 
+        Query.Direction DESCENDING = Query.Direction.DESCENDING;
+
         Query cacheDataQuery = fStore.collection("Notes").document(fUser.getUid())
-                .collection("Archive").orderBy(sortField, order);
+                .collection("Archive").orderBy("Date", DESCENDING);
 
         PagedList.Config config = new PagedList.Config.Builder()
                 .setInitialLoadSizeHint(10)
@@ -178,7 +180,7 @@ public class Archive extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title",model.getTitle());
-                                note.put("Content",finalPlainText);
+                                note.put("Content",model.getContent());
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -222,7 +224,7 @@ public class Archive extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title", model.getTitle());
-                                note.put("Content", finalPlainText);
+                                note.put("Content", model.getContent());
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {

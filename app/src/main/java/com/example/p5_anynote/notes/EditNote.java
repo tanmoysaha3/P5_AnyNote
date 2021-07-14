@@ -107,7 +107,8 @@ public class EditNote extends AppCompatActivity {
         titleEditNote.addTextChangedListener(textWatcher);
         contentEditNote.addTextChangedListener(textWatcher);
 
-        CollectionReference labelsRef=fStore.collection("Labels");
+        CollectionReference labelsRef=fStore.collection("Notes").document(fUser.getUid())
+                .collection("Labels");
         List<String> labels=new ArrayList<>();
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, labels);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

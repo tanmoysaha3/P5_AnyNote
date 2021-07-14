@@ -117,10 +117,9 @@ public class CheckUser extends AppCompatActivity {
                             finish();
                         }
                         else {
-                            Toast.makeText(CheckUser.this, "Need internet for first time use", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CheckUser.this, "Need internet for first time use \n Connect to internet and restart app.", Toast.LENGTH_SHORT).show();
+                            startActivity(getIntent());
                         }
-                        //startActivity(new Intent(getApplicationContext(), Notes.class));
-                        //startActivity(new Intent(getApplicationContext(), OfflineMainActivity.class));
                     }
                 });
         warning.show();

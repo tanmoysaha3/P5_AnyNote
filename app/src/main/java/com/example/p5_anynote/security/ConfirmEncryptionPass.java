@@ -62,9 +62,10 @@ public class ConfirmEncryptionPass extends AppCompatActivity {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                             salt=value.getString("Salt");
+                            content=value.getString("Content");
 
-                            Toast.makeText(ConfirmEncryptionPass.this, "pass= "+pass, Toast.LENGTH_SHORT).show();
-                            Toast.makeText(ConfirmEncryptionPass.this, "salt= "+salt, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ConfirmEncryptionPass.this, "pass= "+pass, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ConfirmEncryptionPass.this, "salt= "+salt, Toast.LENGTH_SHORT).show();
 
                             try {
                                 keys = generateKeyFromPassword(pass, salt);
@@ -72,37 +73,28 @@ public class ConfirmEncryptionPass extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            DocumentReference docRef1=fStore.collection("Notes").document(fUser.getUid())
-                                    .collection("MyNotes").document("Sample");
-                            docRef1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    content=value.getString("Content");
+                            String plainText="Empty";
+                            AesCbcWithIntegrity.CipherTextIvMac cipherTextIvMac = new AesCbcWithIntegrity.CipherTextIvMac(content);
+                            try {
+                                plainText = AesCbcWithIntegrity.decryptString(cipherTextIvMac, keys);
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            } catch (GeneralSecurityException e) {
+                                e.printStackTrace();
+                            }
 
-                                    String plainText="Empty";
-                                    AesCbcWithIntegrity.CipherTextIvMac cipherTextIvMac = new AesCbcWithIntegrity.CipherTextIvMac(content);
-                                    try {
-                                        plainText = AesCbcWithIntegrity.decryptString(cipherTextIvMac, keys);
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    } catch (GeneralSecurityException e) {
-                                        e.printStackTrace();
-                                    }
+                            //Toast.makeText(ConfirmEncryptionPass.this, "plainText= "+plainText, Toast.LENGTH_SHORT).show();
 
-                                    Toast.makeText(ConfirmEncryptionPass.this, "plainText= "+plainText, Toast.LENGTH_SHORT).show();
+                            if (plainText.equals("Let start writing your own notes.")){
+                                PowerPreference.getDefaultFile().putString("AnyNoteEncryptionPass",pass);
+                                PowerPreference.getDefaultFile().putString("AnyNoteEncryptionSalt",salt);
 
-                                    if (plainText.equals("Let start writing your own notes.")){
-                                        PowerPreference.getDefaultFile().putString("AnyNoteEncryptionPass",pass);
-                                        PowerPreference.getDefaultFile().putString("AnyNoteEncryptionSalt",salt);
+                                startActivity(new Intent(getApplicationContext(), Notes.class));
+                            }
 
-                                        startActivity(new Intent(getApplicationContext(), Notes.class));
-                                    }
-
-                                    else {
-                                        Toast.makeText(ConfirmEncryptionPass.this, "Wrong password", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                            else {
+                                Toast.makeText(ConfirmEncryptionPass.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 }

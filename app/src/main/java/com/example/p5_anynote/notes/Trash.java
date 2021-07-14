@@ -187,7 +187,7 @@ public class Trash extends Base {
                                 Map<String,Object> note=new HashMap<>();
                                 note.put("Date", Timestamp.now());
                                 note.put("Title",model.getTitle());
-                                note.put("Content",finalPlainText);
+                                note.put("Content",model.getContent());
                                 note.put("Label",model.getLabel());
                                 note.put("Important",model.getImportant());
                                 docRef.set(note).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -22,15 +22,21 @@
         <activity android:name=".notes.NewNote"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".notes.EditNote"
+            android:label=""
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".notes.NoteDetails"
-            android:label="" />
+            android:label=""
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".account.Register"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".account.Login"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".account.CheckUser">
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".account.CheckUser"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

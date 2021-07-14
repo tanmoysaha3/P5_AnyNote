@@ -49,6 +49,7 @@
             android:layout_width="125sp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:padding="0dp"
             android:popupBackground="@color/skyblue"
             tools:layout_editor_absoluteX="275dp"
             tools:layout_editor_absoluteY="16dp" />
