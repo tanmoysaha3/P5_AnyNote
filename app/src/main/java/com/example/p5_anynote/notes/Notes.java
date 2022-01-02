@@ -278,7 +278,7 @@ public class Notes extends Base {
                         intent.putExtra("NoteId",noteId);
                         intent.putExtra("Important",model.getImportant());
                         startActivity(intent);
-                        return false;
+                        return true;
                     }
                 });
 
